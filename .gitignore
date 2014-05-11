@@ -1,0 +1,6 @@
+*.cpp
+*.o
+*.h
+target/
+/SwitchCell
+/CrossbarSwitch
