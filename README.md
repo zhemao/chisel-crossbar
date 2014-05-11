@@ -9,7 +9,22 @@ line to your build.sbt file.
 
     "com.mao.howard" %% "chisel-crossbar" % "0.1-SNAPSHOT"
 
-Look at CrossbarSwitch.scala to see how the module should be used.
+The file CrossbarSwitch.scala has some comments explaining how it should be
+used.
+
+## Example Usage
+
+    // this creates a switch with a forward path of width 8
+    // a backward path of width 16
+    // 4 ports on the 'left'
+    // and 8 ports on the 'bottom'
+    val switch = Module(new CrossbarSwitch(8, 16, 4, 6)
+
+    // this sets up the switch so that port 2 on the left
+    // and port 4 on the bottom are connected to each other
+    switch.io.fw_left(2) := UInt(22)
+    switch.io.bw_bottom(4) := UInt(54)
+    switch.io.select(4) := UInt(2)
 
 ## License
 
