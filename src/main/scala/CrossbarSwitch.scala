@@ -5,6 +5,15 @@ import Chisel._
 class CrossbarSwitch(
         val fwidth: Int, val bwidth: Int,
         val m: Int, val n: Int) extends Module {
+    /**
+     * fw_left is the forward input
+     * bw_left is the backward output
+     * fw_bottom is the forward output
+     * bw_bottom is the backward input
+     * select determines the switching pattern
+     *     there is one uint for each bottom port,
+     *     the value of which corresponds to one of the left ports
+     */
     val io = new Bundle {
         val fw_left = Vec.fill(m){ UInt(INPUT, fwidth) }
         val bw_left = Vec.fill(m){ UInt(OUTPUT, bwidth) }
