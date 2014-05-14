@@ -15,10 +15,10 @@ class CrossbarSwitch(
      *     the value of which corresponds to one of the left ports
      */
     val io = new Bundle {
-        val fw_left = Vec.fill(m){ UInt(INPUT, fwidth) }
-        val bw_left = Vec.fill(m){ UInt(OUTPUT, bwidth) }
-        val fw_bottom = Vec.fill(n){ UInt(OUTPUT, fwidth) }
-        val bw_bottom = Vec.fill(n){ UInt(INPUT, bwidth) }
+        val fw_left = Vec.fill(m){ Bits(INPUT, fwidth) }
+        val bw_left = Vec.fill(m){ Bits(OUTPUT, bwidth) }
+        val fw_bottom = Vec.fill(n){ Bits(OUTPUT, fwidth) }
+        val bw_bottom = Vec.fill(n){ Bits(INPUT, bwidth) }
         val select = Vec.fill(n){ UInt(INPUT, log2Up(m)) }
     }
 
@@ -39,14 +39,14 @@ class CrossbarSwitch(
         }
 
         if (i == n - 1) {
-            cur_cell.bw_right := UInt(0)
+            cur_cell.bw_right := Bits(0)
         } else {
             val right_cell = cells(i + 1)(j)
             cur_cell.bw_right := right_cell.bw_left
         }
 
         if (j == 0) {
-            cur_cell.fw_top := UInt(0)
+            cur_cell.fw_top := Bits(0)
         } else {
             val top_cell = cells(i)(j - 1)
             cur_cell.fw_top := top_cell.fw_bottom
@@ -82,7 +82,7 @@ class CrossbarSwitchTest(c: CrossbarSwitch) extends Tester(c) {
     for (i <- 0 until c.n) {
         bw_bottom(i) = rnd.nextInt(1 << c.bwidth)
     }
-    
+
     val base_select = rnd.shuffle(Range(0, c.m).toList)
                          .map { i => BigInt(i) }
                          .toArray

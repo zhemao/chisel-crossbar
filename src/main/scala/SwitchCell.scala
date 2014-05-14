@@ -4,22 +4,22 @@ import Chisel._
 
 class SwitchCell(val fwidth: Int, val bwidth: Int)  extends Module {
     val io = new Bundle {
-        val fw_left   = UInt(INPUT, fwidth)
-        val bw_left   = UInt(OUTPUT, bwidth)
-        val fw_top    = UInt(INPUT, fwidth)
-        val bw_top    = UInt(OUTPUT, bwidth)
-        val fw_bottom = UInt(OUTPUT, fwidth)
-        val bw_bottom = UInt(INPUT, bwidth)
-        val fw_right  = UInt(OUTPUT, fwidth)
-        val bw_right  = UInt(INPUT, bwidth)
+        val fw_left   = Bits(INPUT, fwidth)
+        val bw_left   = Bits(OUTPUT, bwidth)
+        val fw_top    = Bits(INPUT, fwidth)
+        val bw_top    = Bits(OUTPUT, bwidth)
+        val fw_bottom = Bits(OUTPUT, fwidth)
+        val bw_bottom = Bits(INPUT, bwidth)
+        val fw_right  = Bits(OUTPUT, fwidth)
+        val bw_right  = Bits(INPUT, bwidth)
         val sel = Bool(INPUT)
     }
 
     when (io.sel) {
         io.fw_bottom := io.fw_left
         io.bw_left := io.bw_bottom
-        io.fw_right := UInt(0)
-        io.bw_top := UInt(0)
+        io.fw_right := Bits(0)
+        io.bw_top := Bits(0)
     } .otherwise {
         io.fw_right := io.fw_left
         io.bw_left := io.bw_right
