@@ -14,6 +14,10 @@ object CrossbarMain {
                 () => Module(new CrossbarSwitch(8, 8, 6, 8))) {
                     c => new CrossbarSwitchTest(c)
                 }
+            case "OnewayCrossbarSwitch" => chiselMainTest(testArgs,
+                () => Module(new OnewayCrossbarSwitch(8, 6, 8))) {
+                    c => new OnewayCrossbarSwitchTest(c)
+                }
         }
     }
 }

@@ -1,6 +1,8 @@
-test: CrossbarSwitch.vcd
+EXECUTABLES = CrossbarSwitch OnewayCrossbarSwitch
 
-verilog: CrossbarSwitch.v
+test: $(addsuffix .vcd, $(EXECUTABLES))
+
+verilog: $(addsuffix .v, $(EXECUTABLES))
 
 %.vcd: src/main/scala/%.scala
 	sbt "run $(notdir $(basename $<)) --genHarness --compile --test --vcd --backend c"
@@ -9,4 +11,4 @@ verilog: CrossbarSwitch.v
 	sbt "run $(notdir $(basename $<)) --compile --backend fpga"
 
 clean:
-	rm -f SwitchCell CrossbarSwitch *.vcd *.v *.cpp *.o *.h
+	rm -f SwitchCell $(EXECUTABLES) *.vcd *.v *.cpp *.o *.h
